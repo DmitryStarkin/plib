@@ -36,7 +36,7 @@ android {
             skipEmptyPackages = true
             reportUndocumented = false
             perPackageOption {
-                prefix = "com.starsoft.prlib.testprocessors"
+                prefix = "com.starsoft.plib.testprocessors"
                 suppress = true
             }
             perPackageOption {
