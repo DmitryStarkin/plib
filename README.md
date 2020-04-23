@@ -4,13 +4,13 @@ This library is written for educational purposes in the Kotlin language,
 but it is fully functional although quite minimalistic
 
 
-Commands are represented as implementations of the processor interface which  
-accepts input data and outputs output dataprocessors are started for execution  
-by an object that implements the executor interface
+Commands are represented as implementations of the interface "Processor"  which  
+accepts input data and outputs result, processors are started for execution  
+by help implementation of interface "Executor"
 
-Currently, the library has a single executor that performs all the tasks passed  
-to it one by one, it is also possible to pass the results of the task as input  
-data to the next one
+Currently, the library has a single implementations  of  interface "Executor"  
+that performs all the tasks  sequentially, it is also possible to pass the  
+task results as input  data for the next task
 
 Usage:
 
@@ -20,7 +20,7 @@ Usage:
 ```
 implementation project(':module_name')
 ```
-Create an implementation of the processor interface to encapsulate data processing  
+Create an implementation of the  interface "Processor" for data processing,  
 pass this object to the executor along with input data and callbacks to pass the  
 result or error
 
