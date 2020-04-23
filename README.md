@@ -32,7 +32,7 @@ Code example
 
 class StringToFileWriter(private val file: File): Processor<String, File>{
 
-    override fun processing(dataForProcessing: File): String{
+    override fun processing(dataForProcessing: String): File{
         // Code that writes a string to a file
         }
 }
