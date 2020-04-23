@@ -49,7 +49,7 @@ interface ProcessorExecutor {
     )
 
     /**
-     * this is stub
+     * This is stub
      * in case you don't need to send anything
      */
     private fun <V> stubCallback(par: V) {
@@ -57,7 +57,7 @@ interface ProcessorExecutor {
     }
 
     /**
-     * this is stub
+     * This is stub
      * in case you don't need to to handle Exception
      * the exception will simply be called
      */

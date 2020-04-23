@@ -30,7 +30,7 @@ android {
 
     dokka {
         outputFormat = 'javadoc'
-        outputDirectory = "$projectDir/docs"
+        outputDirectory = "$rootDir/docs"
         configuration {
             includeNonPublic = false
             skipEmptyPackages = true

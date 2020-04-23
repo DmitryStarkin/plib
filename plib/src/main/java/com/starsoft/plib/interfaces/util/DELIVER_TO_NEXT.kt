@@ -20,8 +20,11 @@ package com.starsoft.plib.interfaces.util
  * @since 1.0
  */
 enum class DELIVER_ : (Any?)->Unit{
-
+ /**
+  * Transfer of the task result to the next task
+  */
  TO_NEXT {
+  /**@suppress*/
   override fun invoke(p1: Any?) {
    throw Exception("DELIVER_TO_NEXT only for use witch SequentiallyProcessorExecutorFromMain")
   }

@@ -17,29 +17,29 @@ package com.starsoft.plib.interfaces.util
 //This File Created at 08.04.2020 19:03.
 
 /**
- * defines the strategy of behavior in case the task which
+ * Defines the strategy of behavior in case the task which
  * takes the data from the previous task has a nonnull data
  * @since 1.0
  */
 
  enum  class NOT_NULL_DATA_STRATEGY {
     /**
-     * accepts current data
+     * Accepts current data
      */
     ALLOW,
 
     /**
-     * rejects data and throws an exception (default behavior)
+     * Rejects data and throws an exception (default behavior)
      */
     REJECT,
 
     /**
-     * replaces data with data received from the previous task
+     * Replaces data with data received from the previous task
      */
     CHANGE,
 
     /**
-     * accepts the current data if the previous task failed
+     * Accepts the current data if the previous task failed
      * with an error otherwise replaces the data
      */
     ALLOW_IF_ERROR

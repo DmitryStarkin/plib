@@ -32,9 +32,10 @@ import com.starsoft.plib.interfaces.Processor
 class ExecutorCommands {
 
     /**
-     * when passing an instance of this class as parameter "processor" to
+     * When passing an instance of this class as parameter "processor" to
      * [com.starsoft.plib.executors.SequentiallyProcessorExecutor.processing]
      * all tasks are removed from the task queue
+     * @constructor
      */
     class DeleteAllNotProcessingTasks : Processor<Unit, Unit> {
         private val TAG = this::class.java.simpleName
@@ -44,12 +45,13 @@ class ExecutorCommands {
     }
 
     /**
-     * when passing an instance of this class as parameter "processor" to
+     * When passing an instance of this class as parameter "processor" to
      * [com.starsoft.plib.executors.SequentiallyProcessorExecutor.processing]
      * the executor stops working
      * Attempts to stop all actively executing tasks, halts the processing of waiting tasks,
      * and returns a list of the tasks that were awaiting execution in the onProcessedCallback call if it is presented.
      * These tasks are drained (removed) from the task queue.
+     * @constructor usually not required
      */
     class ShutdownNow : Processor<MutableList<Runnable>?, MutableList<Runnable>?> {
         private val TAG = this::class.java.simpleName
