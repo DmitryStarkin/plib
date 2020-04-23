@@ -30,7 +30,7 @@ asynchronously, and callbacks will be called in the main thread
 Code example
 ```kotlin
 
- class StringToFileWriter(private val file: File): Processor<String, File>{
+class StringToFileWriter(private val file: File): Processor<String, File>{
 
     override fun processing(dataForProcessing: File): String{
         // Code that writes a string to a file
