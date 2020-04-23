@@ -48,7 +48,6 @@ class NumberToStringConverter: Processor<Number, String>{
 class SomeClass: Activity(){
 
 private val processorsExecutor = SequentiallyProcessorExecutor()
-private val file = File.createTempFile(TEMP_FILE_NAME, TEMP_FILE_EXTENSIONS)
 
 //Some code
 
