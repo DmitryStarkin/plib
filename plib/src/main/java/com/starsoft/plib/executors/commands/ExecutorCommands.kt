@@ -1,0 +1,61 @@
+/*
+ * Copyright © 2020. Dmitry Starkin Contacts: t0506803080@gmail.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the «License»);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * //www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an «AS IS» BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.starsoft.plib.executors.commands
+
+import android.util.Log
+import com.starsoft.plib.interfaces.Processor
+
+/**
+ * Copyright © 2020 Dmitry Starkin. All rights reserved. Contacts: t0506803080@gmail.com.
+ */
+
+//This File Created at 06.04.2020 10:46.
+
+/**
+ * Contains classes used as commands for the [com.starsoft.plib.executors.SequentiallyProcessorExecutor]
+ * @constructor usually not required
+ * @since 1.0
+ */
+
+class ExecutorCommands {
+
+    /**
+     * when passing an instance of this class as parameter "processor" to
+     * [com.starsoft.plib.executors.SequentiallyProcessorExecutor.processing]
+     * all tasks are removed from the task queue
+     */
+    class DeleteAllNotProcessingTasks : Processor<Unit, Unit> {
+        private val TAG = this::class.java.simpleName
+        override fun processing(dataForProcessing: Unit) {
+            Log.d(TAG, "command received")
+        }
+    }
+
+    /**
+     * when passing an instance of this class as parameter "processor" to
+     * [com.starsoft.plib.executors.SequentiallyProcessorExecutor.processing]
+     * the executor stops working
+     * Attempts to stop all actively executing tasks, halts the processing of waiting tasks,
+     * and returns a list of the tasks that were awaiting execution in the onProcessedCallback call if it is presented.
+     * These tasks are drained (removed) from the task queue.
+     */
+    class ShutdownNow : Processor<MutableList<Runnable>?, MutableList<Runnable>?> {
+        private val TAG = this::class.java.simpleName
+        override fun processing(dataForProcessing: MutableList<Runnable>?): MutableList<Runnable>? {
+            Log.d(TAG, "command received")
+            return dataForProcessing
+        }
+    }
+}
