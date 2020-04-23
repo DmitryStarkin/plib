@@ -72,4 +72,4 @@ private val processorsExecutor = SequentiallyProcessorExecutor()
         }
    } 
 ```
-See [JavaDocs]()
+See [JavaDocs](https://dmitrystarkin.github.io/processor_lib/)
