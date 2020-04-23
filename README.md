@@ -27,6 +27,7 @@ result or error
 Currently, you can only pass a task from the main thread. The processor will run  
 asynchronously, and callbacks will be called in the main thread
 
+Code example
 ```kotlin
 
  class StringToFileWriter(private val file: File): Processor<String, File>{
