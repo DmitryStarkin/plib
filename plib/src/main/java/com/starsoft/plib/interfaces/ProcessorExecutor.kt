@@ -19,26 +19,26 @@ import com.starsoft.plib.interfaces.util.CALLBACK_IN
 //This File Created at 05.04.2020 10:32.
 
 /**
- * Run an instances [com.starsoft.plib.interfaces.Processor]
+ * Run an instances [Processor]
  * @since 1.0
  */
 
 interface ProcessorExecutor {
     /**
-     * Processing [dataForProcessing] with the help of a [Processor]
+     * Processing [dataForProcessing] with the help of a implementation [Processor]
      * the result is returned by calling [onProcessedCallback]
      * the error is returned by calling [onErrorCallback]
-     * @param processor instance off [com.starsoft.plib.interfaces.Processor] that processes data
-     * @param dataForProcessing data for processing  data interpretation depends on the implementation
-     * [com.starsoft.plib.interfaces.Processor]
+     * @param processor instance off class that implements [Processor] that processes data
+     * @param dataForProcessing data for processing  data interpretation depends
+     * on the implementation [Processor]
      * @param onProcessedCallback the code that return the result,
-     * if this code is missing will be run [ProcessorExecutor.stubCallback]
+     * if this code is missing will be run [stubCallback][ProcessorExecutor.stubCallback]
      * the result can be passed to the next task for processing see
-     * [com.starsoft.plib.interfaces.util.DELIVER_.TO_NEXT]
+     * [DELIVER_.TO_NEXT][com.starsoft.plib.interfaces.util.DELIVER_.TO_NEXT]
      * @param onErrorCallback the code that  handle the Exception,
-     * if this code is missing will be run [ProcessorExecutor.stubErrorCallback]
+     * if this code is missing will be run [stubErrorCallback][ProcessorExecutor.stubErrorCallback]
      * @param callbackIn specifies where the callback is performed,
-     * see [com.starsoft.plib.interfaces.util.CALLBACK_IN]
+     * see [CALLBACK_IN][com.starsoft.plib.interfaces.util.CALLBACK_IN]
      */
     fun <T, V> processing(
             processor: Processor<T, V>,

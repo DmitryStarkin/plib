@@ -17,14 +17,11 @@ package com.starsoft.plib.executors.commands
 import android.util.Log
 import com.starsoft.plib.interfaces.Processor
 
-/**
- * Copyright © 2020 Dmitry Starkin. All rights reserved. Contacts: t0506803080@gmail.com.
- */
-
 //This File Created at 06.04.2020 10:46.
 
 /**
- * Contains classes used as commands for the [com.starsoft.plib.executors.SequentiallyProcessorExecutor]
+ * Contains classes used as commands for the
+ * [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
  * @constructor usually not required
  * @since 1.0
  */
@@ -32,21 +29,22 @@ import com.starsoft.plib.interfaces.Processor
 class ExecutorCommands {
 
     /**
-     * When passing an instance of this class as parameter "processor" to
-     * [com.starsoft.plib.executors.SequentiallyProcessorExecutor.processing]
+     * When passing an instance of this class as parameter "processor" to fun [processing] in
+     * [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
      * all tasks are removed from the task queue
-     * @constructor
+     * @constructor usually not required
      */
     class DeleteAllNotProcessingTasks : Processor<Unit, Unit> {
         private val TAG = this::class.java.simpleName
+        /**@suppress*/
         override fun processing(dataForProcessing: Unit) {
             Log.d(TAG, "command received")
         }
     }
 
     /**
-     * When passing an instance of this class as parameter "processor" to
-     * [com.starsoft.plib.executors.SequentiallyProcessorExecutor.processing]
+     * When passing an instance of this class as parameter "processor" to fun [processing] in
+     * [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
      * the executor stops working
      * Attempts to stop all actively executing tasks, halts the processing of waiting tasks,
      * and returns a list of the tasks that were awaiting execution in the onProcessedCallback call if it is presented.
@@ -55,6 +53,8 @@ class ExecutorCommands {
      */
     class ShutdownNow : Processor<MutableList<Runnable>?, MutableList<Runnable>?> {
         private val TAG = this::class.java.simpleName
+
+        /**@suppress*/
         override fun processing(dataForProcessing: MutableList<Runnable>?): MutableList<Runnable>? {
             Log.d(TAG, "command received")
             return dataForProcessing

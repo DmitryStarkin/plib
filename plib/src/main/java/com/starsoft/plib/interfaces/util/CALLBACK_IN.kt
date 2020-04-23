@@ -21,13 +21,13 @@ package com.starsoft.plib.interfaces.util
  */
  enum class CALLBACK_IN {
     /**
-     *  the code processing the result will be
+     * The code processing the result will be
      * called in the main thread
      */
     _MAIN_THREAD ,
 
     /**
-     * the code processing the result will
+     * The code processing the result will
      * be called in the thread from which the request was made
      */
     _CALLING_THREAD

@@ -35,6 +35,7 @@ android {
             includeNonPublic = false
             skipEmptyPackages = true
             reportUndocumented = false
+            noJdkLink = false
             perPackageOption {
                 prefix = "com.starsoft.plib.testprocessors"
                 suppress = true

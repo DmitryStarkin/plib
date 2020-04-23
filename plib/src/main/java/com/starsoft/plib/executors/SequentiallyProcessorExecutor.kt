@@ -29,18 +29,19 @@ import com.starsoft.plib.runables.ProcessingRunnable
 //This File Created at 06.04.2020 10:56.
 
 /**
- * starts [Processor][Processor] to run sequentially using a pool of threads with a single thread
- * tasks that do not come from the main thread are rejected
- * can be controlled by passing special commands in the [processing] parameter onProcessedCallback
- * see [com.starsoft.plib.executors.commands.ExecutorCommands]
+ * Starts implementation off [Processor] to run sequentially using a pool of threads with a single thread,
+ * tasks that do not come from the main thread are rejected,
+ * can be controlled by passing special commands in the [processing] parameter "onProcessedCallback"
+ * see [ExecutorCommands]
  * after received command [ExecutorCommands.ShutdownNow] all new tasks are rejected
  * if the [processing] onProcessedCallback parameter was passed when calling the command
  * [ExecutorCommands.ShutdownNow] the list of outstanding tasks will be returned in it
  * for correct processing of the [ExecutorCommands.ShutdownNow]
  * all of the processor implementation must include verification interrupt by
- * @see java.lang.Thread.isInterrupted()
+ * [isInterrupted][java.lang.Thread.isInterrupted]
  * and ensure that work is completed correctly
- * @property strategy
+ * @property strategy the strategy of behavior in case the task which
+ * takes the data from the previous task has a nonnull data
  * @property worker a pool of threads with a single thread for performing tasks
  * can also be used for performing external tasks by directly adding
  * @constructor Creates an [SequentiallyProcessorExecutor]
@@ -55,7 +56,7 @@ class SequentiallyProcessorExecutor : ProcessorExecutor {
     private var stopped = false
 
     /**
-     * processing data, see [com.starsoft.plib.interfaces.ProcessorExecutor.processing]
+     * processing data, see [processing]
      * @see com.starsoft.plib.interfaces.ProcessorExecutor
      */
     override fun <T, V> processing(
@@ -130,6 +131,11 @@ class SequentiallyProcessorExecutor : ProcessorExecutor {
         return Looper.getMainLooper().thread === Thread.currentThread()
     }
 
+    /**
+     * adds tasks from the Runnable list to perform,
+     * for example, it can be used to perform tasks that
+     * the executor returned after receiving the command [ShutdownNow][com.starsoft.plib.executors.commands.ExecutorCommands.ShutdownNow]
+     */
     fun executeRunnableList(list: MutableList<Runnable>) {
         if (!stopped) {
             for (task in list) {

@@ -16,12 +16,14 @@ package com.starsoft.plib.interfaces.util
 
 //This File Created at 08.04.2020 12:24.
 /**
- * When passed as a callback initiates the transfer of the task result to the next task
+ * When passed as a "onProcessedCallback" in [processing][com.starsoft.plib.executors.SequentiallyProcessorExecutor.processing]
+ * initiates the transfer of the task result to the next task
  * @since 1.0
  */
 enum class DELIVER_ : (Any?)->Unit{
  /**
-  * Transfer of the task result to the next task
+  * When passed as a "onProcessedCallback" in [processing][com.starsoft.plib.executors.SequentiallyProcessorExecutor.processing]
+  * initiates the transfer of the task result to the next task
   */
  TO_NEXT {
   /**@suppress*/
