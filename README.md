@@ -46,6 +46,7 @@ class NumberToStringConverter: Processor<Number, String>{
 
 
 class SomeClass: Activity(){
+
 private val processorsExecutor = SequentiallyProcessorExecutor()
 
 //Some code
