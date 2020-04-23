@@ -6,10 +6,10 @@ but it is fully functional although quite minimalistic
 
 Commands are represented as implementations of the interface "Processor"  which  
 accepts input data and outputs result, processors are started for execution  
-by help implementation of interface "Executor"
+using the implementation of the "Executor" interface
 
-Currently, the library has a single implementations  of  interface "Executor"  
-that performs all the tasks  sequentially, it is also possible to pass the  
+Currently, the library has a single implementations  of  interface "Executor",  
+it performs all the tasks  sequentially, it is also possible to pass previous  
 task results as input  data for the next task
 
 Usage:
