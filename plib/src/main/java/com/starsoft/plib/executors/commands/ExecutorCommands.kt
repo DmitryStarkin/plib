@@ -38,7 +38,7 @@ class ExecutorCommands {
         private val TAG = this::class.java.simpleName
         /**@suppress*/
         override fun processing(dataForProcessing: Unit) {
-            Log.d(TAG, "command received")
+            Log.d(TAG, "DeleteAllNotProcessingTasks command received")
         }
     }
 
@@ -56,7 +56,7 @@ class ExecutorCommands {
 
         /**@suppress*/
         override fun processing(dataForProcessing: MutableList<Runnable>?): MutableList<Runnable>? {
-            Log.d(TAG, "command received")
+            Log.d(TAG, "ShutdownNow command received")
             return dataForProcessing
         }
     }

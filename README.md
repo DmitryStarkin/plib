@@ -20,7 +20,24 @@ Usage:
 ```
 implementation project(':module_name')
 ```
-Create an implementation of the  interface "Processor" for data processing,  
+Or use a method that does not require cloning the repository:
+
+in project level build.gradle add:
+```
+repositories {
+........
+        maven { url "https://jitpack.io" }
+   }
+```
+
+in module level build.gradle add:
+```
+dependencies {
+...........
+         implementation 'com.github.DmitryStarkin:plib:1.0.1b'
+   }
+```
+3 Create an implementation of the  interface "Processor" for data processing,  
 pass this object to the executor along with input data and callbacks to pass the  
 result or error
 
