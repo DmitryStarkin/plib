@@ -14,15 +14,7 @@ task results as input  data for the next task
 
 Usage:
 
-1 add a module to the project
-
-2 in build.gradle write
-```
-implementation project(':module_name')
-```
-Or use a method that does not require cloning the repository:
-
-in project level build.gradle add:
+1 in project level build.gradle add:
 ```
 repositories {
 ........
@@ -30,7 +22,7 @@ repositories {
    }
 ```
 
-in module level build.gradle add:
+2 in module level build.gradle add:
 ```
 dependencies {
 ...........
