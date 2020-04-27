@@ -39,7 +39,7 @@ android {
             reportUndocumented = false
             noJdkLink = false
             perPackageOption {
-                prefix = "com.starsoft.plib.testprocessors"
+                prefix = "com.starsoft.plib.experements"
                 suppress = true
             }
             perPackageOption {
@@ -48,6 +48,10 @@ android {
             }
             perPackageOption {
                 prefix = "com.starsoft.plib.runables"
+                suppress = true
+            }
+            perPackageOption {
+                prefix = "com.starsoft.plib.examples"
                 suppress = true
             }
         }
