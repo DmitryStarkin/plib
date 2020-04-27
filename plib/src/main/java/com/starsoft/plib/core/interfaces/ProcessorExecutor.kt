@@ -14,12 +14,14 @@
 
 package com.starsoft.plib.core.interfaces
 
+import com.starsoft.plib.core.auxiliary.stub
+import com.starsoft.plib.core.auxiliary.stubErrorCallback
 import com.starsoft.plib.core.triggers.CALLBACK_IN
 
 //This File Created at 05.04.2020 10:32.
 
 /**
- * Run an instances [Processor]
+ * Run an implementation of [Processor]
  * @since 1.0
  */
 
@@ -32,38 +34,22 @@ interface ProcessorExecutor {
      * @param dataForProcessing data for processing  data interpretation depends
      * on the implementation [Processor]
      * @param onProcessedCallback the code that return the result,
-     * if this code is missing will be run [stubCallback][ProcessorExecutor.stubCallback]
+     * if this code is missing will be run [stub][stub]
      * the result can be passed to the next task for processing see
      * [DELIVER_.TO_NEXT][com.starsoft.plib.core.triggers.DELIVER_.TO_NEXT]
      * @param onErrorCallback the code that  handle the Exception,
-     * if this code is missing will be run [stubErrorCallback][ProcessorExecutor.stubErrorCallback]
+     * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
      * @param callbackIn specifies where the callback is performed,
      * see [CALLBACK_IN][com.starsoft.plib.core.triggers.CALLBACK_IN]
+     * @since 1.0
      */
     fun <T, V> processing(
-            processor: Processor<T, V>,
-            dataForProcessing: T? = null,
-            onProcessedCallback: (V) -> Unit = ::stubCallback,
-            onErrorCallback: (Exception) -> Unit = ::stubErrorCallback,
-            callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD
+        processor: Processor<T, V>,
+        dataForProcessing: T? = null,
+        onProcessedCallback: (V) -> Unit = ::stub,
+        onErrorCallback: (Exception) -> Unit = ::stubErrorCallback,
+        callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD
     )
-
-    /**
-     * This is stub
-     * in case you don't need to send anything
-     */
-    private fun <V> stubCallback(par: V) {
-
-    }
-
-    /**
-     * This is stub
-     * in case you don't need to to handle Exception
-     * the exception will simply be called
-     */
-    private fun stubErrorCallback(par: Exception) {
-        throw par
-    }
 }
 
 

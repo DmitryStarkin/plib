@@ -21,7 +21,7 @@ import com.starsoft.plib.core.interfaces.Processor
 
 /**
  * Contains classes used as commands for the
- * [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
+ * [ProcessorExecutor][com.starsoft.plib.core.ProcessorExecutor]
  * @constructor usually not required
  * @since 1.0
  */
@@ -29,12 +29,15 @@ import com.starsoft.plib.core.interfaces.Processor
 class ExecutorCommands {
 
     /**
-     * When passing an instance of this class as parameter "processor" to fun [processing] in
-     * [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
+     * When passing an instance of this class as parameter "processor" to
+     * [processing][com.starsoft.plib.core.ProcessorExecutor.processing] in
+     * implementation of [ProcessorExecutor][com.starsoft.plib.core.ProcessorExecutor]
      * all tasks are removed from the task queue
      * @constructor usually not required
+     * @since 1.0
      */
-    class DeleteAllNotProcessingTasks : Processor<Unit, Unit> {
+    class DeleteAllNotProcessingTasks :
+        Processor<Unit, Unit> {
         private val TAG = this::class.java.simpleName
         /**@suppress*/
         override fun processing(dataForProcessing: Unit) {
@@ -43,15 +46,20 @@ class ExecutorCommands {
     }
 
     /**
-     * When passing an instance of this class as parameter "processor" to fun [processing] in
-     * [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
+     * When passing an instance of this class as parameter "processor" to
+     * [processing][com.starsoft.plib.core.ProcessorExecutor.processing] in
+     * implementation of [ProcessorExecutor][com.starsoft.plib.core.ProcessorExecutor]
      * the executor stops working
      * Attempts to stop all actively executing tasks, halts the processing of waiting tasks,
      * and returns a list of the tasks that were awaiting execution in the onProcessedCallback call if it is presented.
      * These tasks are drained (removed) from the task queue.
+     * the instance of [ProcessorExecutor][com.starsoft.plib.core.ProcessorExecutor]
+     * will be stopped and cannot be used in the future
      * @constructor usually not required
+     * @since 1.0
      */
-    class ShutdownNow : Processor<MutableList<Runnable>?, MutableList<Runnable>?> {
+    class ShutdownNow :
+        Processor<MutableList<Runnable>?, MutableList<Runnable>?> {
         private val TAG = this::class.java.simpleName
 
         /**@suppress*/

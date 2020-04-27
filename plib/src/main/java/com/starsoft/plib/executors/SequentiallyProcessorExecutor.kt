@@ -29,7 +29,7 @@ import com.starsoft.plib.runables.ProcessingRunnable
 //This File Created at 06.04.2020 10:56.
 
 /**
- * Starts implementation off [Processor] to run sequentially using a pool of threads with a single thread,
+ * Starts implementation of [Processor] to run sequentially using a pool of threads with a single thread,
  * tasks that do not come from the main thread are rejected,
  * can be controlled by passing special commands in the [processing] parameter "onProcessedCallback"
  * see [ExecutorCommands]
@@ -47,7 +47,8 @@ import com.starsoft.plib.runables.ProcessingRunnable
  * @constructor Creates an [SequentiallyProcessorExecutor]
  * @since 1.0
  */
-class SequentiallyProcessorExecutor : ProcessorExecutor {
+class SequentiallyProcessorExecutor :
+    ProcessorExecutor {
 
     private val TAG = this::class.java.simpleName
 
@@ -57,7 +58,8 @@ class SequentiallyProcessorExecutor : ProcessorExecutor {
 
     /**
      * processing data, see [processing]
-     * @see com.starsoft.plib.core.interfaces.ProcessorExecutor
+     * @see com.starsoft.plib.core.ProcessorExecutor
+     * @since 1.0
      */
     override fun <T, V> processing(
         processor: Processor<T, V>,
@@ -134,7 +136,9 @@ class SequentiallyProcessorExecutor : ProcessorExecutor {
     /**
      * adds tasks from the Runnable list to perform,
      * for example, it can be used to perform tasks that
-     * the executor returned after receiving the command [ShutdownNow][com.starsoft.plib.core.commands.ExecutorCommands.ShutdownNow]
+     * the executor returned after receiving the command
+     * [ShutdownNow][com.starsoft.plib.executors.commands.ExecutorCommands.ShutdownNow]
+     * @since 1.0
      */
     fun executeRunnableList(list: MutableList<Runnable>) {
         if (!stopped) {
