@@ -26,7 +26,7 @@ repositories {
 ```
 dependencies {
 ...........
-         implementation 'com.github.DmitryStarkin:plib:1.0.1b'
+         implementation 'com.github.DmitryStarkin:plib:1.0.2b'
    }
 ```
 3 Create an implementation of the  interface "Processor" for data processing,  
