@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.starsoft.plib.interfaces.util
+package com.starsoft.plib.core.triggers
 
 //This File Created at 08.04.2020 12:24.
 /**

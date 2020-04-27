@@ -12,23 +12,20 @@
  * limitations under the License.
  */
 
-package com.starsoft.plib.interfaces.util
+package com.starsoft.plib.core.interfaces
 
-//This File Created at 08.04.2020 12:03.
+//This File Created at 05.04.2020 10:31.
+
 /**
- * Constants that determine which thread the result will be returned in
+ * Processing the input data
  * @since 1.0
  */
- enum class CALLBACK_IN {
+interface Processor<T,V>{
     /**
-     * The code processing the result will be
-     * called in the main thread
+     * Processing the input data
+     * @param dataForProcessing data for processing  data interpretation depends on the implementation
+     * @return processing result data interpretation depends on the implementation
      */
-    _MAIN_THREAD ,
+    fun processing(dataForProcessing: T): V
 
-    /**
-     * The code processing the result will
-     * be called in the thread from which the request was made
-     */
-    _CALLING_THREAD
 }

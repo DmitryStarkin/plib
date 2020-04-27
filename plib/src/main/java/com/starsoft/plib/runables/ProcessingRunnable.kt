@@ -20,9 +20,9 @@ import com.starsoft.plib.BuildConfig
 import com.starsoft.plib.handlers.DELIVER_ERROR
 import com.starsoft.plib.handlers.DELIVER_RESULT
 import com.starsoft.plib.handlers.MainHandler
-import com.starsoft.plib.interfaces.Processor
-import com.starsoft.plib.interfaces.util.CALLBACK_IN
-import com.starsoft.plib.interfaces.util.NOT_NULL_DATA_STRATEGY
+import com.starsoft.plib.core.interfaces.Processor
+import com.starsoft.plib.core.triggers.CALLBACK_IN
+import com.starsoft.plib.core.triggers.NOT_NULL_DATA_STRATEGY
 
 
 const val DFAULT_TAG = "no tag"
@@ -32,13 +32,13 @@ const val DFAULT_TAG = "no tag"
  * @since 1.0
  */
 class ProcessingRunnable<T, V>(
-        private val processor: Processor<T, V>,
-        private var data: T?,
-        private val onProcessed: ((V) -> Unit)?,
-        private val onError: ((Exception) -> Unit)?,
-        private val callbackIn: CALLBACK_IN,
-        private val strategy: NOT_NULL_DATA_STRATEGY,
-        private val tag: String = DFAULT_TAG) : Runnable {
+    private val processor: Processor<T, V>,
+    private var data: T?,
+    private val onProcessed: ((V) -> Unit)?,
+    private val onError: ((Exception) -> Unit)?,
+    private val callbackIn: CALLBACK_IN,
+    private val strategy: NOT_NULL_DATA_STRATEGY,
+    private val tag: String = DFAULT_TAG) : Runnable {
 
 
     private var result: V? = null

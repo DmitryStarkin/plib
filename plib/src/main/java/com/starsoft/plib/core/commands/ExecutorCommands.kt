@@ -12,10 +12,10 @@
  * limitations under the License.
  */
 
-package com.starsoft.plib.executors.commands
+package com.starsoft.plib.core.commands
 
 import android.util.Log
-import com.starsoft.plib.interfaces.Processor
+import com.starsoft.plib.core.interfaces.Processor
 
 //This File Created at 06.04.2020 10:46.
 

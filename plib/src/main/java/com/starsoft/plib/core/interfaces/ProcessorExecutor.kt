@@ -12,9 +12,9 @@
  * limitations under the License.
  */
 
-package com.starsoft.plib.interfaces
+package com.starsoft.plib.core.interfaces
 
-import com.starsoft.plib.interfaces.util.CALLBACK_IN
+import com.starsoft.plib.core.triggers.CALLBACK_IN
 
 //This File Created at 05.04.2020 10:32.
 
@@ -34,11 +34,11 @@ interface ProcessorExecutor {
      * @param onProcessedCallback the code that return the result,
      * if this code is missing will be run [stubCallback][ProcessorExecutor.stubCallback]
      * the result can be passed to the next task for processing see
-     * [DELIVER_.TO_NEXT][com.starsoft.plib.interfaces.util.DELIVER_.TO_NEXT]
+     * [DELIVER_.TO_NEXT][com.starsoft.plib.core.triggers.DELIVER_.TO_NEXT]
      * @param onErrorCallback the code that  handle the Exception,
      * if this code is missing will be run [stubErrorCallback][ProcessorExecutor.stubErrorCallback]
      * @param callbackIn specifies where the callback is performed,
-     * see [CALLBACK_IN][com.starsoft.plib.interfaces.util.CALLBACK_IN]
+     * see [CALLBACK_IN][com.starsoft.plib.core.triggers.CALLBACK_IN]
      */
     fun <T, V> processing(
             processor: Processor<T, V>,

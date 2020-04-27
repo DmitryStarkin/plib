@@ -16,14 +16,14 @@ package com.starsoft.plib.executors
 
 import android.os.Looper
 import android.util.Log
-import com.starsoft.plib.executors.commands.ExecutorCommands
+import com.starsoft.plib.core.commands.ExecutorCommands
 import com.starsoft.plib.executors.workers.SingleThreadPoolExecutor
 import com.starsoft.plib.handlers.MainHandler
-import com.starsoft.plib.interfaces.Processor
-import com.starsoft.plib.interfaces.ProcessorExecutor
-import com.starsoft.plib.interfaces.util.CALLBACK_IN
-import com.starsoft.plib.interfaces.util.DELIVER_
-import com.starsoft.plib.interfaces.util.NOT_NULL_DATA_STRATEGY
+import com.starsoft.plib.core.interfaces.Processor
+import com.starsoft.plib.core.interfaces.ProcessorExecutor
+import com.starsoft.plib.core.triggers.CALLBACK_IN
+import com.starsoft.plib.core.triggers.DELIVER_
+import com.starsoft.plib.core.triggers.NOT_NULL_DATA_STRATEGY
 import com.starsoft.plib.runables.ProcessingRunnable
 
 //This File Created at 06.04.2020 10:56.
@@ -57,7 +57,7 @@ class SequentiallyProcessorExecutor : ProcessorExecutor {
 
     /**
      * processing data, see [processing]
-     * @see com.starsoft.plib.interfaces.ProcessorExecutor
+     * @see com.starsoft.plib.core.interfaces.ProcessorExecutor
      */
     override fun <T, V> processing(
         processor: Processor<T, V>,
@@ -134,7 +134,7 @@ class SequentiallyProcessorExecutor : ProcessorExecutor {
     /**
      * adds tasks from the Runnable list to perform,
      * for example, it can be used to perform tasks that
-     * the executor returned after receiving the command [ShutdownNow][com.starsoft.plib.executors.commands.ExecutorCommands.ShutdownNow]
+     * the executor returned after receiving the command [ShutdownNow][com.starsoft.plib.core.commands.ExecutorCommands.ShutdownNow]
      */
     fun executeRunnableList(list: MutableList<Runnable>) {
         if (!stopped) {
