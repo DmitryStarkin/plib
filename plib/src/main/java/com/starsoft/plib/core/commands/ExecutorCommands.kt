@@ -21,7 +21,7 @@ import com.starsoft.plib.core.interfaces.Processor
 
 /**
  * Contains classes used as commands for the
- * [ProcessorExecutor][com.starsoft.plib.core.ProcessorExecutor]
+ * [ProcessorExecutor][com.starsoft.plib.core.interfaces.ProcessorExecutor]
  * @constructor usually not required
  * @since 1.0
  */
@@ -30,8 +30,8 @@ class ExecutorCommands {
 
     /**
      * When passing an instance of this class as parameter "processor" to
-     * [processing][com.starsoft.plib.core.ProcessorExecutor.processing] in
-     * implementation of [ProcessorExecutor][com.starsoft.plib.core.ProcessorExecutor]
+     * [processing][com.starsoft.plib.core.interfaces.ProcessorExecutor.processing] in
+     * implementation of [ProcessorExecutor][com.starsoft.plib.core.interfaces.ProcessorExecutor]
      * all tasks are removed from the task queue
      * @constructor usually not required
      * @since 1.0
@@ -47,13 +47,13 @@ class ExecutorCommands {
 
     /**
      * When passing an instance of this class as parameter "processor" to
-     * [processing][com.starsoft.plib.core.ProcessorExecutor.processing] in
-     * implementation of [ProcessorExecutor][com.starsoft.plib.core.ProcessorExecutor]
+     * [processing][com.starsoft.plib.core.interfaces.ProcessorExecutor.processing] in
+     * implementation of [ProcessorExecutor][com.starsoft.plib.core.interfaces.ProcessorExecutor]
      * the executor stops working
      * Attempts to stop all actively executing tasks, halts the processing of waiting tasks,
      * and returns a list of the tasks that were awaiting execution in the onProcessedCallback call if it is presented.
      * These tasks are drained (removed) from the task queue.
-     * the instance of [ProcessorExecutor][com.starsoft.plib.core.ProcessorExecutor]
+     * the instance of [ProcessorExecutor][com.starsoft.plib.core.interfaces.ProcessorExecutor]
      * will be stopped and cannot be used in the future
      * @constructor usually not required
      * @since 1.0
