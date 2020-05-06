@@ -91,6 +91,10 @@ class ProcessingRunnable<T, V>(
                 e.printStackTrace()
                 error = e
                 command(DELIVER_ERROR)
+            } catch (e: Error){
+                e.printStackTrace()
+                error = Exception("Error $e")
+                command(DELIVER_ERROR)
             }
         } else {
             command(DELIVER_ERROR)
