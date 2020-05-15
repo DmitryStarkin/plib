@@ -46,7 +46,7 @@ fun<T, R> T.executeOnExecutor(executor: ProcessorExecutor, onResult: (R) -> Unit
 
     executor.processing(object : Processor<Unit, R> {
         override fun processing(dataForProcessing: Unit): R {
-            return lambda.invoke(this@executeOnExecutor)
+            return this@executeOnExecutor.lambda()
         }}, Unit,onResult,onError)
 
 
