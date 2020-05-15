@@ -29,7 +29,7 @@ class SingleThreadPoolExecutor<V> :
         (V) -> Unit {
 
     var listener: TaskWithTrueFlagEndListener? = null
-    var previusTaskResult: WeakReference<Any?>? = null
+    var previusTaskResult: Any? = null
 
     override fun afterExecute(r: Runnable?, t: Throwable?) {
         super.afterExecute(r, t)
@@ -41,7 +41,7 @@ class SingleThreadPoolExecutor<V> :
     override fun beforeExecute(t: Thread?, r: Runnable?) {
         super.beforeExecute(t, r)
         if (r is ProcessingRunnable<*, *> && previusTaskResult != null) {
-            r.setData(previusTaskResult?.get())
+            r.setData(previusTaskResult)
             previusTaskResult = null
         }
     }
@@ -56,7 +56,6 @@ class SingleThreadPoolExecutor<V> :
 
     override fun invoke(p1: V) {
 
-        previusTaskResult = WeakReference(p1)
+        previusTaskResult = p1
     }
-
 }
