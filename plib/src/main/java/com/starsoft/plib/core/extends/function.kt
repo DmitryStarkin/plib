@@ -18,36 +18,99 @@ import com.starsoft.plib.core.auxiliary.stub
 import com.starsoft.plib.core.auxiliary.stubErrorCallback
 import com.starsoft.plib.core.interfaces.Processor
 import com.starsoft.plib.core.interfaces.ProcessorExecutor
+import com.starsoft.plib.core.triggers.CALLBACK_IN
+import com.starsoft.plib.executors.SequentiallyProcessorExecutor
 
 
 //This File Created at 15.05.2020 15:51.
 
-fun<T> ProcessorExecutor.executeAsProcessor(onResult: (T) -> Unit= ::stub, onError: (Exception) -> Unit = ::stubErrorCallback, lambda: () -> T){
+fun <T> ProcessorExecutor.executeAsProcessor(
+    onResult: (T) -> Unit = ::stub,
+    onError: (Exception) -> Unit = ::stubErrorCallback,
+    callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD,
+    lambda: () -> T
+) {
 
     this.processing(object : Processor<Unit, T> {
         override fun processing(dataForProcessing: Unit): T {
             return lambda.invoke()
         }
-    }, Unit,onResult,onError)
+    }, Unit, onResult, onError, callbackIn)
 
 }
 
-fun<V, T> ProcessorExecutor.executeAsProcessor(data: V?, onResult: (T) -> Unit = ::stub, onError: (Exception) -> Unit = ::stubErrorCallback, lambda: (V) -> T){
+fun <V, T> ProcessorExecutor.executeAsProcessor(
+    data: V?,
+    onResult: (T) -> Unit = ::stub,
+    onError: (Exception) -> Unit = ::stubErrorCallback,
+    callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD,
+    lambda: (V) -> T
+) {
 
     this.processing(object : Processor<V, T> {
         override fun processing(dataForProcessing: V): T {
             return lambda.invoke(dataForProcessing)
         }
-    }, data, onResult, onError)
+    }, data, onResult, onError, callbackIn)
 
 }
 
-fun<T, R> T.executeOnExecutor(executor: ProcessorExecutor, onResult: (R) -> Unit = ::stub, onError: (Exception) -> Unit = ::stubErrorCallback, lambda: T.() -> R){
+fun <T, R> T.executeOnExecutor(
+    executor: ProcessorExecutor,
+    onResult: (R) -> Unit = ::stub,
+    onError: (Exception) -> Unit = ::stubErrorCallback,
+    callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD,
+    lambda: T.() -> R
+) {
 
     executor.processing(object : Processor<Unit, R> {
         override fun processing(dataForProcessing: Unit): R {
             return this@executeOnExecutor.lambda()
-        }}, Unit,onResult,onError)
-
-
+        }
+    }, Unit, onResult, onError, callbackIn)
 }
+
+fun <T, V, R> T.executeOnExecutor(
+    executor: ProcessorExecutor,
+    data: V?,
+    onResult: (R) -> Unit = ::stub,
+    onError: (Exception) -> Unit = ::stubErrorCallback,
+    callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD,
+    lambda: T.(V) -> R
+) {
+
+    executor.processing(object : Processor<V, R> {
+        override fun processing(dataForProcessing: V): R {
+            return this@executeOnExecutor.lambda(dataForProcessing)
+        }
+    }, data, onResult, onError, callbackIn)
+}
+
+fun <T, R> T.runOnThread(
+    onResult: (R) -> Unit = ::stub,
+    onError: (Exception) -> Unit = ::stubErrorCallback,
+    lambda: T.() -> R
+) {
+
+    SequentiallyExecutor.processing(object : Processor<Unit, R> {
+        override fun processing(dataForProcessing: Unit): R {
+            return this@runOnThread.lambda()
+        }
+    }, Unit, onResult, onError)
+}
+
+fun <T, V, R> T.runOnThread(
+    data: V?,
+    onResult: (R) -> Unit = ::stub,
+    onError: (Exception) -> Unit = ::stubErrorCallback,
+    lambda: T.(V) -> R
+) {
+
+    SequentiallyExecutor.processing(object : Processor<V, R> {
+        override fun processing(dataForProcessing: V): R {
+            return this@runOnThread.lambda(dataForProcessing)
+        }
+    }, data, onResult, onError)
+}
+
+private object SequentiallyExecutor : ProcessorExecutor by SequentiallyProcessorExecutor() {}
