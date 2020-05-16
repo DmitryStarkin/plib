@@ -20,7 +20,7 @@ import com.starsoft.plib.core.interfaces.Processor
 import com.starsoft.plib.core.interfaces.ProcessorExecutor
 import com.starsoft.plib.core.triggers.CALLBACK_IN
 import com.starsoft.plib.executors.SequentiallyProcessorExecutor
-import java.lang.System.out
+
 
 
 //This File Created at 15.05.2020 15:51.
@@ -40,7 +40,7 @@ fun <T> ProcessorExecutor.executeAsProcessor(
 
 }
 
-fun <V, T> ProcessorExecutor.runAsProcessor(
+fun <V, T> ProcessorExecutor.executeAsProcessorWithData(
     data: V?,
     onResult: (T) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
@@ -56,7 +56,7 @@ fun <V, T> ProcessorExecutor.runAsProcessor(
 
 }
 
-fun <T, R> T.executeOnExecutor(
+fun <T, R> T.execute(
     executor: ProcessorExecutor,
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
@@ -66,12 +66,12 @@ fun <T, R> T.executeOnExecutor(
 
     executor.processing(object : Processor<Unit, R> {
         override fun processing(dataForProcessing: Unit): R {
-            return this@executeOnExecutor.lambda()
+            return this@execute.lambda()
         }
     }, Unit, onResult, onError, callbackIn)
 }
 
-fun <T, V, R> T.runOnExecutor(
+fun <T, V, R> T.executeWithData(
     executor: ProcessorExecutor,
     data: V?,
     onResult: (R) -> Unit = ::stub,
@@ -82,12 +82,12 @@ fun <T, V, R> T.runOnExecutor(
 
     executor.processing(object : Processor<V, R> {
         override fun processing(dataForProcessing: V): R {
-            return this@runOnExecutor.lambda(dataForProcessing)
+            return this@executeWithData.lambda(dataForProcessing)
         }
     }, data, onResult, onError, callbackIn)
 }
 
-fun <T, R> T.executeOnThread(
+fun <T, R> T.runOnThread(
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
     lambda: T.() -> R
@@ -95,13 +95,13 @@ fun <T, R> T.executeOnThread(
 
     SequentiallyExecutor.processing(object : Processor<Unit, R> {
         override fun processing(dataForProcessing: Unit): R {
-            return this@executeOnThread.lambda()
+            return this@runOnThread.lambda()
         }
     }, Unit, onResult, onError)
 }
 
-fun <T, V, R> T.runOnThread(
-    data: V? ,
+fun <T, V, R> T.runOnThreadWithData(
+    data: V?,
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
     lambda: T.(V) -> R
@@ -109,9 +109,10 @@ fun <T, V, R> T.runOnThread(
 
     SequentiallyExecutor.processing(object : Processor<V, R> {
         override fun processing(dataForProcessing: V): R {
-            return this@runOnThread.lambda(dataForProcessing)
+            return this@runOnThreadWithData.lambda(dataForProcessing)
         }
     }, data, onResult, onError)
 }
+
 
 private object SequentiallyExecutor : ProcessorExecutor by SequentiallyProcessorExecutor() {}
