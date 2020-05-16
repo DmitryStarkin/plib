@@ -20,6 +20,7 @@ import com.starsoft.plib.core.interfaces.Processor
 import com.starsoft.plib.core.interfaces.ProcessorExecutor
 import com.starsoft.plib.core.triggers.CALLBACK_IN
 import com.starsoft.plib.executors.SequentiallyProcessorExecutor
+import java.lang.System.out
 
 
 //This File Created at 15.05.2020 15:51.
@@ -39,7 +40,7 @@ fun <T> ProcessorExecutor.executeAsProcessor(
 
 }
 
-fun <V, T> ProcessorExecutor.executeAsProcessor(
+fun <V, T> ProcessorExecutor.runAsProcessor(
     data: V?,
     onResult: (T) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
@@ -70,7 +71,7 @@ fun <T, R> T.executeOnExecutor(
     }, Unit, onResult, onError, callbackIn)
 }
 
-fun <T, V, R> T.executeOnExecutor(
+fun <T, V, R> T.runOnExecutor(
     executor: ProcessorExecutor,
     data: V?,
     onResult: (R) -> Unit = ::stub,
@@ -81,12 +82,12 @@ fun <T, V, R> T.executeOnExecutor(
 
     executor.processing(object : Processor<V, R> {
         override fun processing(dataForProcessing: V): R {
-            return this@executeOnExecutor.lambda(dataForProcessing)
+            return this@runOnExecutor.lambda(dataForProcessing)
         }
     }, data, onResult, onError, callbackIn)
 }
 
-fun <T, R> T.runOnThread(
+fun <T, R> T.executeOnThread(
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
     lambda: T.() -> R
@@ -94,13 +95,13 @@ fun <T, R> T.runOnThread(
 
     SequentiallyExecutor.processing(object : Processor<Unit, R> {
         override fun processing(dataForProcessing: Unit): R {
-            return this@runOnThread.lambda()
+            return this@executeOnThread.lambda()
         }
     }, Unit, onResult, onError)
 }
 
 fun <T, V, R> T.runOnThread(
-    data: V?,
+    data: V? ,
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
     lambda: T.(V) -> R
