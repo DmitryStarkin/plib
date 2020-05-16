@@ -53,12 +53,13 @@ class SequentiallyProcessorExecutor :
     private val TAG = this::class.java.simpleName
 
     var strategy: NOT_NULL_DATA_STRATEGY = NOT_NULL_DATA_STRATEGY.REJECT
-    val worker = SingleThreadPoolExecutor<Any?>()
+    var worker = SingleThreadPoolExecutor<Any?>()
+    private set
     private var stopped = false
 
     /**
      * processing data, see [processing]
-     * @see com.starsoft.plib.core.ProcessorExecutor
+     * @see com.starsoft.plib.core.interfaces.ProcessorExecutor
      * @since 1.0
      */
     override fun <T, V> processing(
@@ -129,6 +130,11 @@ class SequentiallyProcessorExecutor :
         }
     }
 
+    override fun reset() {
+        worker.shutdownNow()
+        worker = SingleThreadPoolExecutor<Any?>()
+    }
+
     private fun isMainThread(): Boolean {
         return Looper.getMainLooper().thread === Thread.currentThread()
     }
@@ -137,7 +143,7 @@ class SequentiallyProcessorExecutor :
      * adds tasks from the Runnable list to perform,
      * for example, it can be used to perform tasks that
      * the executor returned after receiving the command
-     * [ShutdownNow][com.starsoft.plib.executors.commands.ExecutorCommands.ShutdownNow]
+     * [ShutdownNow][com.starsoft.plib.core.commands.ExecutorCommands.ShutdownNow]
      * @since 1.0
      */
     fun executeRunnableList(list: MutableList<Runnable>) {

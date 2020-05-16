@@ -50,6 +50,7 @@ interface ProcessorExecutor {
         onErrorCallback: (Exception) -> Unit = ::stubErrorCallback,
         callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD
     )
+    fun reset()
 }
 
 
