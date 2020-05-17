@@ -129,7 +129,10 @@ class SequentiallyProcessorExecutor :
             deliverError("impossible run task executor is stopped")
         }
     }
-
+    /**
+     * Reset executor
+     * @see com.starsoft.plib.core.interfaces.ProcessorExecutor.reset
+     */
     override fun reset() {
         worker.shutdownNow()
         worker = SingleThreadPoolExecutor<Any?>()

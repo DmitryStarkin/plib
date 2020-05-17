@@ -1,6 +1,8 @@
 com.starsoft.plib.core.auxiliary
 com.starsoft.plib.core.commands
 com.starsoft.plib.core.extends
+com.starsoft.plib.core.func
 com.starsoft.plib.core.interfaces
 com.starsoft.plib.core.triggers
 com.starsoft.plib.executors
+com.starsoft.plib.executors.global

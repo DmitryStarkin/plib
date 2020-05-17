@@ -50,6 +50,12 @@ interface ProcessorExecutor {
         onErrorCallback: (Exception) -> Unit = ::stubErrorCallback,
         callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD
     )
+
+    /**
+     * Reset executor
+     * usually interrupts all threads in this executor
+     * but the executor retains the ability to accept the following tasks
+     */
     fun reset()
 }
 
