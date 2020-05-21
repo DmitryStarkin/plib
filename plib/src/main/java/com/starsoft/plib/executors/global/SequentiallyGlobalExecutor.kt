@@ -17,6 +17,7 @@ package com.starsoft.plib.executors.global
 import com.starsoft.plib.core.auxiliary.stub
 import com.starsoft.plib.core.auxiliary.stubErrorCallback
 import com.starsoft.plib.core.extends.execute
+import com.starsoft.plib.core.extends.executeAsProcessorWithData
 import com.starsoft.plib.core.extends.executeWithData
 import com.starsoft.plib.core.interfaces.ProcessorExecutor
 import com.starsoft.plib.core.triggers.CALLBACK_IN
@@ -48,7 +49,7 @@ object SequentiallyGlobalExecutor : ProcessorExecutor by SequentiallyProcessorEx
         onResult: (R) -> Unit = ::stub,
         onError: (Exception) -> Unit = ::stubErrorCallback,
         lambda: T.() -> R
-    ): ProcessorExecutor {
+    ): SequentiallyGlobalExecutor {
         this.execute(
             this@SequentiallyGlobalExecutor, onResult, onError,
             CALLBACK_IN._MAIN_THREAD, lambda
@@ -61,7 +62,7 @@ object SequentiallyGlobalExecutor : ProcessorExecutor by SequentiallyProcessorEx
      * as its receiver and returns its result as callback
      * the call is made on executor witch single thread
      * this executor is global within the process
-     * @param data data that will be passed to lambda as an input parameter
+     * @param data data that will be passed to lambda as its parameter
      * @param onResult the code that return the result,
      * if this code is missing will be run [stub][stub]
      * the result can be passed to the next task for processing see
@@ -75,10 +76,39 @@ object SequentiallyGlobalExecutor : ProcessorExecutor by SequentiallyProcessorEx
         data: V?,
         onResult: (R) -> Unit = ::stub,
         onError: (Exception) -> Unit = ::stubErrorCallback,
-        lambda: T.(V) -> R
-    ): ProcessorExecutor {
+        lambda: T.(V?) -> R
+    ): SequentiallyGlobalExecutor {
         this.executeWithData(
             this@SequentiallyGlobalExecutor, data, onResult, onError,
+            CALLBACK_IN._MAIN_THREAD, lambda
+        )
+        return this@SequentiallyGlobalExecutor
+    }
+    /**
+     * Calls the specified function [lambda]
+     * and returns its result as callback
+     * call is made on executor witch single thread
+     * this executor is global within the process
+     * @receiver a [SequentiallyGlobalExecutor][com.starsoft.plib.executors.global.SequentiallyGlobalExecutor]
+     * where the task will be performed
+     * @param data data that will be passed to lambda as an its parameter
+     * @param onResult the code that return the result,
+     * if this code is missing will be run [stub][stub]
+     * the result can be passed to the next task for processing see
+     * [DELIVER_.TO_NEXT][com.starsoft.plib.core.triggers.DELIVER_.TO_NEXT]
+     * @param onError the code that  handle the Exception,
+     * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
+     *
+     * [onError] and [onResult] are called in the main thread
+     * @return [ProcessorExecutor] on which the execution was performed
+     */
+    fun <V, R> SequentiallyGlobalExecutor.handleData(
+        data: V?,
+        onResult: (R) -> Unit = ::stub,
+        onError: (Exception) -> Unit = ::stubErrorCallback,
+        lambda: (V?) -> R
+    ): SequentiallyGlobalExecutor {
+        this@SequentiallyGlobalExecutor.executeAsProcessorWithData(data, onResult, onError,
             CALLBACK_IN._MAIN_THREAD, lambda
         )
         return this@SequentiallyGlobalExecutor

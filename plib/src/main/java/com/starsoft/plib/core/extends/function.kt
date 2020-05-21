@@ -30,6 +30,7 @@ import com.starsoft.plib.core.triggers.CALLBACK_IN
  * where the task will be performed
  * @param onResult the code that return the result,
  * if this code is missing will be run [stub][stub]
+ * if [ProcessorExecutor] is [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
  * the result can be passed to the next task for processing see
  * [DELIVER_.TO_NEXT][com.starsoft.plib.core.triggers.DELIVER_.TO_NEXT]
  * @param onError the code that  handle the Exception,
@@ -62,6 +63,7 @@ fun <T> ProcessorExecutor.executeAsProcessor(
  * @param data data that will be passed to lambda as an input parameter
  * @param onResult the code that return the result,
  * if this code is missing will be run [stub][stub]
+ * if [ProcessorExecutor] is [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
  * the result can be passed to the next task for processing see
  * [DELIVER_.TO_NEXT][com.starsoft.plib.core.triggers.DELIVER_.TO_NEXT]
  * @param onError the code that  handle the Exception,
@@ -75,7 +77,7 @@ fun <V, T> ProcessorExecutor.executeAsProcessorWithData(
     onResult: (T) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
     callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD,
-    lambda: (V) -> T
+    lambda: (V?) -> T
 ): ProcessorExecutor {
 
     this.processing(object : Processor<V, T> {
@@ -93,6 +95,7 @@ fun <V, T> ProcessorExecutor.executeAsProcessorWithData(
  * where the task will be performed
  * @param onResult the code that return the result,
  * if this code is missing will be run [stub][stub]
+ * if [ProcessorExecutor] is [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
  * the result can be passed to the next task for processing see
  * [DELIVER_.TO_NEXT][com.starsoft.plib.core.triggers.DELIVER_.TO_NEXT]
  * @param onError the code that  handle the Exception,
@@ -123,6 +126,7 @@ fun <T, R> T.execute(
  * @param data data that will be passed to lambda as an input parameter
  * @param onResult the code that return the result,
  * if this code is missing will be run [stub][stub]
+ * if [ProcessorExecutor] is [SequentiallyProcessorExecutor][com.starsoft.plib.executors.SequentiallyProcessorExecutor]
  * the result can be passed to the next task for processing see
  * [DELIVER_.TO_NEXT][com.starsoft.plib.core.triggers.DELIVER_.TO_NEXT]
  * @param onError the code that  handle the Exception,
@@ -137,7 +141,7 @@ fun <T, V, R> T.executeWithData(
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
     callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD,
-    lambda: T.(V) -> R
+    lambda: T.(V?) -> R
 ) {
 
     executor.processing(object : Processor<V, R> {

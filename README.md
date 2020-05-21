@@ -12,6 +12,9 @@ Currently, the library has a single implementations  of  interface "Executor",
 it performs all the tasks  sequentially, it is also possible to pass previous  
 task results as input  data for the next task
 
+The library also has extension functions for easy execution of tasks in thread,
+and execute lambda as processor
+
 Usage:
 
 1 in project level build.gradle add:
@@ -26,7 +29,7 @@ repositories {
 ```
 dependencies {
 ...........
-         implementation 'com.github.DmitryStarkin:plib:1.0.2b'
+         implementation 'com.github.DmitryStarkin:plib:1.4.2b'
    }
 ```
 3 Create an implementation of the  interface "Processor" for data processing,  
@@ -83,4 +86,62 @@ private val processorsExecutor = SequentiallyProcessorExecutor()
         }
    } 
 ```
+
+Extension functions example
+
+```kotlin
+class SomeClass: Activity(){
+
+    val textView: TextView = //init view
+    var thread: Thread? = null
+    
+    fun someFun (){
+        val inputStream: InputStream = File("example.txt").inputStream()
+        thread = inputStream.runOnThread({text -> textView.text = text},{e -> textView.text = e.toString()}){ bufferedReader().use { it.readText() }}
+    
+    }
+    
+    fun someFun1 (){
+     
+        val file = File("example.txt")
+        thread = file.processingOnThread({text -> textView.text = text},{e -> textView.text = e.toString()}){ it.inputStream().bufferedReader().use { it.readText() }}
+    }
+    
+    fun someFun2 (){
+     
+        val file = File("example.txt")
+        thread = handleOnThread(file, {text -> textView.text = text},{e -> textView.text = e.toString()}){ it.inputStream().bufferedReader().use { reader -> reader.readText() }}
+    }
+    
+    private val processorsExecutor = SequentiallyProcessorExecutor()
+    
+    fun someFun3 (){
+    
+        val file = File("example.txt")
+        processorsExecutor.executeAsProcessor({text -> textView.text = text},{e -> textView.text = e.toString()}){file.inputStream().bufferedReader().use { it.readText() }}
+    }
+    
+    fun someFun4 (){
+
+        val file = File("example.txt")
+        processorsExecutor.executeAsProcessor(DELIVER_.TO_NEXT){file.inputStream().bufferedReader().use { it.readText() }}
+            .executeAsProcessorWithData(null, {text -> textView.text = text},{ e -> textView.text = e.toString()}){ it?.replace("\r\n", "") }
+    }
+    
+    fun someFun5 (){
+
+        val file = File("example.txt")
+        file.runOnExecutor(DELIVER_.TO_NEXT){inputStream().bufferedReader().use { it.readText() }}
+            .handleData(null, {text -> textView.text = text},{ e -> textView.text = e.toString()}){ it?.replace("\r\n", "") }
+    }
+    
+    override fun onDestroy() {
+
+        thread?.interrupt()
+        }
+ } 
+
+```
+
+
 See [Docs](https://dmitrystarkin.github.io/plib/)
