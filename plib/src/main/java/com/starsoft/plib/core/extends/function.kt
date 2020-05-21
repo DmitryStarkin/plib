@@ -24,7 +24,7 @@ import com.starsoft.plib.core.triggers.CALLBACK_IN
 
 /**
  * Calls the specified function [lambda]
- * as its receiver and returns its result as callback
+ * and returns its result as callback
  * call is made on [ProcessorExecutor]
  * @receiver a [ProcessorExecutor][com.starsoft.plib.core.interfaces.ProcessorExecutor]
  * where the task will be performed
@@ -36,24 +36,26 @@ import com.starsoft.plib.core.triggers.CALLBACK_IN
  * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
  *
  * [onError] and [onResult] are called in the main thread
+ * @return [ProcessorExecutor] on which the execution was performed
  */
 fun <T> ProcessorExecutor.executeAsProcessor(
     onResult: (T) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
     callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD,
     lambda: () -> T
-) {
+): ProcessorExecutor {
 
     this.processing(object : Processor<Unit, T> {
         override fun processing(dataForProcessing: Unit): T {
             return lambda.invoke()
         }
     }, Unit, onResult, onError, callbackIn)
-
+    return this
 }
+
 /**
  * Calls the specified function [lambda]
- * as its receiver and returns its result as callback
+ * and returns its result as callback
  * call is made on [ProcessorExecutor]
  * @receiver a [ProcessorExecutor][com.starsoft.plib.core.interfaces.ProcessorExecutor]
  * where the task will be performed
@@ -66,6 +68,7 @@ fun <T> ProcessorExecutor.executeAsProcessor(
  * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
  *
  * [onError] and [onResult] are called in the main thread
+ * @return [ProcessorExecutor] on which the execution was performed
  */
 fun <V, T> ProcessorExecutor.executeAsProcessorWithData(
     data: V?,
@@ -73,14 +76,14 @@ fun <V, T> ProcessorExecutor.executeAsProcessorWithData(
     onError: (Exception) -> Unit = ::stubErrorCallback,
     callbackIn: CALLBACK_IN = CALLBACK_IN._MAIN_THREAD,
     lambda: (V) -> T
-) {
+): ProcessorExecutor {
 
     this.processing(object : Processor<V, T> {
         override fun processing(dataForProcessing: V): T {
             return lambda.invoke(dataForProcessing)
         }
     }, data, onResult, onError, callbackIn)
-
+    return this
 }
 
 /**
@@ -111,6 +114,7 @@ fun <T, R> T.execute(
         }
     }, Unit, onResult, onError, callbackIn)
 }
+
 /**
  * Calls the specified function [lambda] with `this` value
  * as its receiver and returns its result as callback

@@ -42,16 +42,18 @@ object SequentiallyGlobalExecutor : ProcessorExecutor by SequentiallyProcessorEx
      * @param onError the code that  handle the Exception,
      * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
      * [onError] and [onResult] are called in the main thread
+     * @return  global  executor on which the execution was performed
      */
     fun <T, R> T.runOnExecutor(
         onResult: (R) -> Unit = ::stub,
         onError: (Exception) -> Unit = ::stubErrorCallback,
         lambda: T.() -> R
-    ) {
+    ): ProcessorExecutor {
         this.execute(
             this@SequentiallyGlobalExecutor, onResult, onError,
             CALLBACK_IN._MAIN_THREAD, lambda
         )
+        return this@SequentiallyGlobalExecutor
     }
 
     /**
@@ -67,17 +69,19 @@ object SequentiallyGlobalExecutor : ProcessorExecutor by SequentiallyProcessorEx
      * @param onError the code that  handle the Exception,
      * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
      * [onError] and [onResult] are called in the main thread
+     * @return  global  executor on which the execution was performed
      */
     fun <T, V, R> T.runOnExecutorWithData(
         data: V?,
         onResult: (R) -> Unit = ::stub,
         onError: (Exception) -> Unit = ::stubErrorCallback,
         lambda: T.(V) -> R
-    ) {
+    ): ProcessorExecutor {
         this.executeWithData(
             this@SequentiallyGlobalExecutor, data, onResult, onError,
             CALLBACK_IN._MAIN_THREAD, lambda
         )
+        return this@SequentiallyGlobalExecutor
     }
 
     /**
