@@ -97,20 +97,23 @@ class SomeClass: Activity(){
     
     fun someFun (){
         val inputStream: InputStream = File("example.txt").inputStream()
-        thread = inputStream.runOnThread({text -> textView.text = text},{e -> textView.text = e.toString()}){ bufferedReader().use { it.readText() }}
+        thread = inputStream.runOnThread({text -> textView.text = text},{e -> textView.text = e.toString()})
+        { bufferedReader().use { it.readText() }}
     
     }
     
     fun someFun1 (){
      
         val file = File("example.txt")
-        thread = file.processingOnThread({text -> textView.text = text},{e -> textView.text = e.toString()}){ it.inputStream().bufferedReader().use { it.readText() }}
+        thread = file.processingOnThread({text -> textView.text = text},{e -> textView.text = e.toString()})
+        { it.inputStream().bufferedReader().use { it.readText() }}
     }
     
     fun someFun2 (){
      
         val file = File("example.txt")
-        thread = handleOnThread(file, {text -> textView.text = text},{e -> textView.text = e.toString()}){ it.inputStream().bufferedReader().use { reader -> reader.readText() }}
+        thread = handleOnThread(file, {text -> textView.text = text},{e -> textView.text = e.toString()})
+        { it.inputStream().bufferedReader().use { reader -> reader.readText() }}
     }
     
     private val processorsExecutor = SequentiallyProcessorExecutor()
@@ -118,21 +121,26 @@ class SomeClass: Activity(){
     fun someFun3 (){
     
         val file = File("example.txt")
-        processorsExecutor.executeAsProcessor({text -> textView.text = text},{e -> textView.text = e.toString()}){file.inputStream().bufferedReader().use { it.readText() }}
+        processorsExecutor.executeAsProcessor({text -> textView.text = text},{e -> textView.text = e.toString()})
+        {file.inputStream().bufferedReader().use { it.readText() }}
     }
     
     fun someFun4 (){
 
         val file = File("example.txt")
-        processorsExecutor.executeAsProcessor(DELIVER_.TO_NEXT){file.inputStream().bufferedReader().use { it.readText() }}
-            .executeAsProcessorWithData(null, {text -> textView.text = text},{ e -> textView.text = e.toString()}){ it?.replace("\r\n", "") }
+        processorsExecutor.executeAsProcessor(DELIVER_.TO_NEXT)
+        {file.inputStream().bufferedReader().use { it.readText() }}
+            .executeAsProcessorWithData(null, {text -> textView.text = text},{ e -> textView.text = e.toString()})
+            { it?.replace("\r\n", "") }
     }
     
     fun someFun5 (){
 
         val file = File("example.txt")
-        file.runOnExecutor(DELIVER_.TO_NEXT){inputStream().bufferedReader().use { it.readText() }}
-            .handleData(null, {text -> textView.text = text},{ e -> textView.text = e.toString()}){ it?.replace("\r\n", "") }
+        file.runOnExecutor(DELIVER_.TO_NEXT)
+        {inputStream().bufferedReader().use { it.readText() }}
+            .handleData(null, {text -> textView.text = text},{ e -> textView.text = e.toString()})
+            { it?.replace("\r\n", "") }
     }
     
     override fun onDestroy() {
