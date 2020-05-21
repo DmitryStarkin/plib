@@ -121,3 +121,42 @@ fun <T, R> T.processingOnThread(
     }.apply { isDaemon =_isDaemon
         start() }
 }
+
+/**
+ * Calls the specified function [lambda]
+ * with `this` value as its argument on a new thread
+ * @param onResult Calls  on main thread with `this` value as its argument after
+ * function [lambda] finished
+ * if this code is missing will be run stub
+ * @param onError the code that  handle the Exception,
+ * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
+ * [onError] and [onResult] are called in the main thread
+ * @param _isDaemon determines whether the thread is a daemon, true by default
+ * @return a reference to the thread in which the work
+ * is performed can be used for example for interrupting
+ */
+fun <T> T.prepareOnThreadAndRun(
+    onResult: T.() -> Unit = ::rStub,
+    onError: (Exception) -> Unit = ::stubErrorCallback,
+    _isDaemon: Boolean = true,
+    lambda: T.() -> Unit
+): Thread {
+    return Thread {
+        try {
+            this.lambda()
+            MainHandler.instance.post { this.onResult() }
+        } catch (e: Exception) {
+            MainHandler.instance.post { onError(e) }
+        } catch (e: Error) {
+            MainHandler.instance.post { onError(Exception("Error - $e")) }
+        }
+    }.apply { isDaemon =_isDaemon
+        start() }
+}
+
+/**@suppress*/
+fun <T> T.rStub(t: T) {
+
+}
+
+
