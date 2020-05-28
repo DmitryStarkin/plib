@@ -31,14 +31,14 @@ import com.starsoft.plib.handlers.MainHandler
  * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
  *
  * [onError] and [onResult] are called in the main thread
- * @param _isDaemon determines whether the thread is a daemon, true by default
+ * @param _isDaemon determines whether the thread is a daemon, false by default
  * @return a reference to the thread in which the work
  * is performed can be used for example for interrupting
  */
 fun <T, R> T.runOnThread(
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
-    _isDaemon: Boolean = true,
+    _isDaemon: Boolean = false,
     lambda: T.() -> R
 ): Thread {
     return Thread {
@@ -64,7 +64,7 @@ fun <T, R> T.runOnThread(
  * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
  *
  * [onError] and [onResult] are called in the main thread
- *  @param _isDaemon determines whether the thread is a daemon, true by default
+ *  @param _isDaemon determines whether the thread is a daemon, false by default
  * @return a reference to the thread in which the work
  * is performed can be used for example for interrupting
  */
@@ -72,7 +72,7 @@ fun <T, R> runOnThreadWitch(
     receiver: T,
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
-    _isDaemon: Boolean = true,
+    _isDaemon: Boolean = false,
     lambda: T.() -> R
 ): Thread {
     return Thread {
@@ -98,7 +98,7 @@ fun <T, R> runOnThreadWitch(
  * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
  *
  * [onError] and [onResult] are called in the main thread
- * @param _isDaemon determines whether the thread is a daemon, true by default
+ * @param _isDaemon determines whether the thread is a daemon, false by default
  * @return a reference to the thread in which the work
  * is performed can be used for example for interrupting
  */
@@ -106,7 +106,7 @@ fun <T, R> runOnThreadWitch(
 fun <T, R> T.processingOnThread(
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
-    _isDaemon: Boolean = true,
+    _isDaemon: Boolean = false,
     lambda: (T) -> R
 ): Thread {
     return Thread {
@@ -133,7 +133,7 @@ fun <T, R> T.processingOnThread(
  * if this code is missing will be run [stubErrorCallback][stubErrorCallback]
  *
  * [onError] and [onResult] are called in the main thread
- * @param _isDaemon determines whether the thread is a daemon, true by default
+ * @param _isDaemon determines whether the thread is a daemon, false by default
  * @return a reference to the thread in which the work
  * is performed can be used for example for interrupting
  */
@@ -141,7 +141,7 @@ fun <T, R> handleOnThread(
     data: T,
     onResult: (R) -> Unit = ::stub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
-    _isDaemon: Boolean = true,
+    _isDaemon: Boolean = false,
     lambda: (T) -> R
 ): Thread {
     return Thread {
@@ -173,7 +173,7 @@ fun <T, R> handleOnThread(
 fun <T> T.prepareOnThreadAndRun(
     onResult: T.() -> Unit = ::rStub,
     onError: (Exception) -> Unit = ::stubErrorCallback,
-    _isDaemon: Boolean = true,
+    _isDaemon: Boolean = false,
     lambda: T.() -> Unit
 ): Thread {
     return Thread {
