@@ -19,6 +19,7 @@ import com.starsoft.plib.core.auxiliary.stubErrorCallback
 import com.starsoft.plib.core.interfaces.Processor
 import com.starsoft.plib.core.interfaces.ProcessorExecutor
 import com.starsoft.plib.core.triggers.CALLBACK_IN
+import com.starsoft.plib.handlers.MainHandler
 
 //This File Created at 15.05.2020 15:51.
 
@@ -149,4 +150,19 @@ fun <T, V, R> T.executeWithData(
             return this@executeWithData.lambda(dataForProcessing)
         }
     }, data, onResult, onError, callbackIn)
+}
+
+/**
+ * Calls `this` as function in UI (Main) thread
+ * @param data data that will be passed to function as an input parameter
+ */
+fun <T, V> ((T) -> V).runInUI(data: T) {
+    MainHandler.instance.post { this.invoke(data) }
+}
+
+/**
+ * Calls `this` as function in UI (Main) thread
+ */
+fun <V> (() -> V).runInUI() {
+    MainHandler.instance.post { this.invoke() }
 }

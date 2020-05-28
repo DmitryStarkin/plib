@@ -1,4 +1,4 @@
-**A small library that implements a pattern similar to the command pattern**
+**A small Kotlin library for asynchronous task execution on Android**
 
 This library is written for educational purposes in the Kotlin language,  
 but it is fully functional although quite minimalistic
@@ -13,7 +13,7 @@ it performs all the tasks  sequentially, it is also possible to pass previous
 task results as input  data for the next task
 
 The library also has extension functions for easy execution of tasks in thread,
-and execute lambda as processor
+and execute lambda as processor, and send lambda for update UI (like runOnUiThread)
 
 Usage:
 
@@ -140,7 +140,9 @@ class SomeClass: Activity(){
         file.runOnExecutor(DELIVER_.TO_NEXT)
         {inputStream().bufferedReader().use { it.readText() }}
             .handleData(null, {text -> textView.text = text},{ e -> textView.text = e.toString()})
-            { it?.replace("\r\n", "") }
+            { it?.replace("\r\n", "") };
+            
+            {textView.text  = "4"}.runInUI()
     }
     
     override fun onDestroy() {
