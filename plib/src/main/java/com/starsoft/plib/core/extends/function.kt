@@ -166,3 +166,20 @@ fun <T, V> ((T) -> V).runInUI(data: T) {
 fun <V> (() -> V).runInUI() {
     MainHandler.instance.post { this.invoke() }
 }
+
+/**
+ * Calls [lambda] as function in UI (Main) thread
+ * @param lambda function to call
+ * @param data data that will be passed to lambda as an input parameter
+ */
+fun <T, V> runOnUI(data: T , lambda: (T) -> V) {
+    MainHandler.instance.post { lambda(data) }
+}
+
+/**
+ * Calls [lambda] as function in UI (Main) thread
+ * @param lambda function to call
+ */
+fun <V> runOnUI(lambda: () -> V) {
+    MainHandler.instance.post { lambda() }
+}
