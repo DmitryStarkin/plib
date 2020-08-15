@@ -29,6 +29,7 @@ package com.starsoft.plib.core.triggers
     /**
      * The code processing the result will
      * be called in the thread from which the request was made
+     * currently all callbacks run in main thread
      */
     _CALLING_THREAD
 }

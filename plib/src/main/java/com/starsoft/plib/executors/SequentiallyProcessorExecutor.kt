@@ -97,7 +97,7 @@ class SequentiallyProcessorExecutor :
                     deliverResult(processor.processing(worker.shutdownNow()) as V)
                 }
                 else -> {
-                    if (isMainThread()) {
+
                         if (onProcessedCallback == DELIVER_.TO_NEXT) {
                             Log.d(TAG, "true")
                             val task = ProcessingRunnable(
@@ -115,14 +115,11 @@ class SequentiallyProcessorExecutor :
                                 dataForProcessing,
                                 onProcessedCallback,
                                 onErrorCallback,
-                                callbackIn,
+                                if (isMainThread()){callbackIn} else {CALLBACK_IN._MAIN_THREAD},
                                 strategy
                             )
                             worker.execute(task)
                         }
-                    } else {
-                        deliverError("Not possible execute a task from not main thread")
-                    }
                 }
             }
         } else {
