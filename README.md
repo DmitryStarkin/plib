@@ -1,3 +1,6 @@
+**This repository is deprecated**
+Use [android async lib]([https://dmitrystarkin.github.io/android_async_lib/](https://github.com/DmitryStarkin/android_async_lib))
+
 **A small Kotlin library for asynchronous task execution on Android**
 
 This library is written for educational purposes in the Kotlin language,  
